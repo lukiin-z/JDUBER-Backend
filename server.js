@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
 const connectDB = require('./config/db');
-require('dotenv').config(); // Carregar variáveis de ambiente
+const cors = require('cors');
+require('dotenv').config();
 const nodemailer = require('nodemailer');
 
 // Inicializa o app Express
@@ -9,6 +10,7 @@ const app = express();
 
 // Middleware para permitir o uso de JSON no corpo das requisições
 app.use(express.json());
+app.use(cors()); // Adiciona CORS
 
 // Conectar ao MongoDB
 connectDB();
@@ -50,7 +52,7 @@ app.get('/reset-password', (req, res) => {
 });
 
 // Porta do servidor - Pegando a porta que o Google Cloud define
-const PORT = process.env.PORT || 8080; // 8080 é uma porta padrão comum
+const PORT = process.env.PORT || 8080;
 
 // Iniciar o servidor
 app.listen(PORT, () => {
