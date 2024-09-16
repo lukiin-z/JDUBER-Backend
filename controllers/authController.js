@@ -14,8 +14,7 @@ const transporter = nodemailer.createTransport({
 
 // Função para enviar email de redefinição de senha
 const sendResetPasswordEmail = async (email, resetToken) => {
-    const resetURL = `http://localhost:5000/reset-password?token=${resetToken}`;
-
+    const resetURL = `https://nights-like-this-435616.web.app/jduber/reset-password.html?token=${resetToken}`;
 
     const mailOptions = {
         from: 'Seu Projeto <no-reply@seuprojeto.com>',
