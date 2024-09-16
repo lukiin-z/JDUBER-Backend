@@ -15,9 +15,6 @@ app.use(cors()); // Adiciona CORS
 // Conectar ao MongoDB
 connectDB();
 
-// Servir os arquivos do frontend
-app.use(express.static(path.join(__dirname, '../frontend')));
-
 // Rotas de autenticação
 app.use('/api/auth', require('./routes/authRoutes'));
 
@@ -41,14 +38,9 @@ transporter.verify((error, success) => {
     }
 });
 
-// Rota para servir a página principal (index.html)
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/index.html'));
-});
-
-// Rota para servir a página de redefinição de senha (reset-password.html)
-app.get('/reset-password', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/reset-password.html'));
+// Rota de teste de conexão do servidor
+app.get('/test', (req, res) => {
+    res.send('Backend rodando corretamente!');
 });
 
 // Porta do servidor - Pegando a porta que o Google Cloud define
@@ -57,9 +49,4 @@ const PORT = process.env.PORT || 8080;
 // Iniciar o servidor
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
-});
-
-// Rota de teste de conexão do servidor
-app.get('/test', (req, res) => {
-    res.send('Backend rodando corretamente!');
 });
