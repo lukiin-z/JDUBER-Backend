@@ -11,8 +11,14 @@ exports.authMiddleware = async (req, res, next) => {
             // Extrai o token do header
             token = req.headers.authorization.split(' ')[1];
 
+            // Log para verificar o token recebido
+            console.log('Token recebido:', req.headers.authorization);
+
             // Verifica e decodifica o token JWT
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+            // Log para verificar o conteúdo do token decodificado
+            console.log('Token decodificado:', decoded);
 
             // Pega os dados do usuário com base no ID decodificado do token
             req.user = await User.findById(decoded.id).select('-password');
@@ -21,6 +27,9 @@ exports.authMiddleware = async (req, res, next) => {
             if (!req.user) {
                 return res.status(404).json({ message: 'Usuário não encontrado' });
             }
+
+            // Log de sucesso
+            console.log('Usuário autenticado:', req.user);
 
             next(); // Continua para a próxima função (rota)
         } catch (error) {
